@@ -10,20 +10,22 @@ Introducing [beans-0-1.5B](https://huggingface.co/sshkeda/beans-0-1.5B)—an LLM
 
 The ultimate goal of beans-ai is to master chess, but before doing so, it must learn to make legal moves consistently.
 
-Currently, a [1.5B parameter distilled version of DeepSeek R1](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B) generates legal moves 4% of the time. But I wanted to see if I could improve that.
+When prompting chess puzzles, a [1.5B parameter](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B) distilled DeepSeek R1 outputs legal moves only about 4% of the time. 
 
-So, I prompted R1 to find the next best move for several thousand chess puzzles and used the generations that produced a legal next move to create a [dataset (2,159 samples)](https://huggingface.co/datasets/sshkeda/beans-0-dataset.json).
+I wanted to see if I could improve that.
+
+So, I prompted full R1 to solve several thousand chess puzzles and used the generations that produced a legal next move to create a [dataset](https://huggingface.co/datasets/sshkeda/beans-0-dataset.json) of 2,159 reasoning examples.
 
 I then used [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) to fine-tune DeepSeek-R1-Distill-Qwen-1.5B on the dataset, creating beans-0-1.5B.
 
 ## Evals
 
-To evaluate how well beans-0-1.5B generates legal moves, I randomly sampled 100 chess puzzles from the [EleutherAI/lichess-puzzles dataset](https://huggingface.co/datasets/EleutherAI/lichess-puzzles) and prompted beans to find the next best move for each puzzle.
+To evaluate how well beans-0-1.5B outputs legal moves, I randomly sampled 100 chess puzzles from the [EleutherAI/lichess-puzzles dataset](https://huggingface.co/datasets/EleutherAI/lichess-puzzles) and prompted beans to solve each puzzle.
 
 Answers were evaluated as follows:
 
-- **1:** The move exists on the board.
-- **0:** The move doesn't exist on the board.
+- **1:** The next move exists on the board.
+- **0:** The next move doesn't exist on the board.
 - **-1:** Invalid format (no \<answer>\</answer>).
 
 ## Results
@@ -33,9 +35,9 @@ Answers were evaluated as follows:
 | **beans-0-1.5B**                    | **62**                | **16**            | **22**          | **0.22** | **-0.40**      |
 | DeepSeek-R1-Distill-Qwen-1.5B       | 75                    | 21                | 4               | 0.04     | -0.71          |
 
-beans-0-1.5B demonstrated significant improvement over its baseline DeepSeek-R1-Distill-Qwen-1.5B at generating legal moves!
+beans-0-1.5B demonstrated significant improvement over its baseline DeepSeek-R1-Distill-Qwen-1.5B at generating legal moves for chess puzzles!
 
-## Future
+## Future plan
 
 - Build a reward function to evaluate chess move quality.
 - Implement GRPO for RL training.
