@@ -1,8 +1,10 @@
 # beans-ai (alpha)
 
-If LLMs are getting so good at math and coding, why haven't they become chess grandmasters yet?
+Chess engines like Stockfish are the best in the world for playing chess, but unlike the best humans, engines are black boxes that can't explain their thinking process.
 
-Introducing [beans-0-1.5B](https://huggingface.co/sshkeda/beans-0-1.5B)—an AI trained to reason about chess. 
+But what if you could have AI with state-of-the-art chess capabilities, a transparent thinking process, and the ability to have conversations?
+
+Introducing [beans-0-1.5B](https://huggingface.co/sshkeda/beans-0-1.5B)—an LLM trained to reason about chess. 
 
 ## beans-0-1.5B 
 
@@ -31,10 +33,17 @@ Answers were evaluated as follows:
 
 beans-0-1.5B demonstrated significant improvement over its baseline DeepSeek-R1-Distill-Qwen-1.5B at generating valid moves!
 
-## Future:
+## Future
 
 - Build a reward function to evaluate chess move quality.
 - Implement GRPO for RL training.
 - Scale training data with >> 2,159 samples.
 - Fine-tune using only good moves.
 - Explore self-improvement via synthetic data generation.
+
+## Acknowledgements
+
+Thank you,
+- Startup Shell for access to 2 NVIDIA 3090s.
+- Bobby George for setting up SSH for the GPUs.
+- DeepSeek for open-source AI.
