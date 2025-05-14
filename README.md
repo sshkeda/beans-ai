@@ -1,53 +1,66 @@
-# beans-ai (alpha)
+Nowadays, chess engines like Stockfish are incredibly powerful.
 
-Chess engines like Stockfish are the best in the world for playing chess, but unlike the best humans, engines are black boxes that can't explain their thinking process.
+They can beat every human on earth with little to no effort.
 
-But what if you could have an AI with state-of-the-art chess capabilities, a transparent thinking process, and the ability to have conversations?
+And while they are so strong, there's one thing that sets them apart from the best grandmasters.
 
-Introducing [beans-0-1.5B](https://huggingface.co/sshkeda/beans-0-1.5B)—an LLM trained to reason about chess. 
+They can't talk.
 
-## beans-0-1.5B 
+But imagine if they could.
 
-The ultimate goal of beans-ai is to master chess, but before doing so, it must learn to make legal moves consistently.
+Could we:
 
-When prompting chess puzzles, a [1.5B parameter](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B) distilled DeepSeek R1 outputs legal moves only about 4% of the time. 
+- Offer free world-class chess tutoring to everyone?
+- Discover new, intuitive strategies?
+- Even beat Stockfish at its own game?
 
-I wanted to see if I could improve that.
+To explore these possibilities, I want to introduce:
 
-So, I prompted full R1 to solve several thousand chess puzzles and used the generations that produced a legal next move to create a [dataset](https://huggingface.co/datasets/sshkeda/beans-0-dataset.json) of 2,159 reasoning examples.
+# Beans AI
 
-I then used [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) to fine-tune DeepSeek-R1-Distill-Qwen-1.5B on the dataset, creating beans-0-1.5B.
+The goal: create the world's best chess tutor.
+
+How? Reinforcement learning and fine-tuning LLMs.
+
+---
+
+## beans-0-1.5B
+
+Before becoming a grandmaster, one must first learn to make legal moves.
+
+If you give a [1.5B parameter](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B) LLM a chess puzzle, it only outputs legal moves 4% of the time.
+
+I wanted to see if I could improve this.
+
+So, I prompted DeepSeek R1 to solve several thousand chess puzzles. Then, I collected the responses that contained legal moves and created a [dataset](https://huggingface.co/datasets/sshkeda/beans-0-dataset.json) of 2,159 reasoning examples.
+
+Next, I fine-tuned DeepSeek-R1-Distill-Qwen-1.5B on the dataset using [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory).
+
+The result: [beans-0-1.5B](https://huggingface.co/sshkeda/beans-0-1.5B).
 
 ## Evals
 
-To evaluate how well beans-0-1.5B outputs legal moves, I randomly sampled 100 chess puzzles from the [EleutherAI/lichess-puzzles dataset](https://huggingface.co/datasets/EleutherAI/lichess-puzzles) and prompted beans to solve each puzzle.
+To test how often beans-0-1.5B outputs legal moves, I randomly selected 100 chess puzzles from the [EleutherAI/lichess-puzzles dataset](https://huggingface.co/datasets/EleutherAI/lichess-puzzles) and prompted beans to solve each puzzle.
 
-Answers were evaluated as follows:
+Answers were scored as follows:
 
-- **1:** The next move exists on the board.
-- **0:** The next move doesn't exist on the board.
-- **-1:** Invalid format (no \<answer>\</answer>).
+- **1:** Generated move is legal and exists on the board.
+- **0:** Generated move is illegal or doesn't exist on the board.
+- **-1:** Invalid format (missing <answer></answer> tags).
 
 ## Results
 
-| Model                               | Parsing Failures (-1) | Invalid Moves (0) | Legal Moves (1) | Accuracy | Expected value |
-|-------------------------------------|-----------------------|-------------------|-----------------|----------|----------------|
-| **beans-0-1.5B**                    | **62**                | **16**            | **22**          | **0.22** | **-0.40**      |
-| DeepSeek-R1-Distill-Qwen-1.5B       | 75                    | 21                | 4               | 0.04     | -0.71          |
+| Model                         | Parsing Failures (-1) | Invalid Moves (0) | Legal Moves (1) | Accuracy | Expected value |
+| ----------------------------- | --------------------- | ----------------- | --------------- | -------- | -------------- |
+| **beans-0-1.5B**              | **62**                | **16**            | **22**          | **0.22** | **-0.40**      |
+| DeepSeek-R1-Distill-Qwen-1.5B | 75                    | 21                | 4               | 0.04     | -0.71          |
 
-beans-0-1.5B demonstrated significant improvement over its baseline DeepSeek-R1-Distill-Qwen-1.5B at generating legal moves for chess puzzles!
-
-## Future plan
-
-- Build a reward function to evaluate chess move quality.
-- Implement GRPO for RL training.
-- Scale training data with >> 2,159 samples.
-- Fine-tune using only good moves.
-- Explore self-improvement via synthetic data generation.
+beans-0-1.5B showed a clear improvement over the baseline DeepSeek-R1-Distill-Qwen-1.5B in generating legal chess moves.
 
 ## Acknowledgements
 
-Thank you,
-- Startup Shell for access to 2 NVIDIA 3090s.
-- Bobby George for setting up SSH for the GPUs.
-- DeepSeek for open-source AI.
+Special thanks to:
+
+- Startup Shell for providing access to two NVIDIA 3090 GPUs.
+- Bobby George for setting up SSH access to these GPUs.
+- DeepSeek for their open-source AI models.

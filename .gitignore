@@ -1,0 +1,12 @@
+.old
+.scripts
+eval/output
+__pycache__
+.venv
+grpo_trainer_lora_model
+models
+datasets
+unsloth_compiled_cache
+node_modules
+.env
+.next
