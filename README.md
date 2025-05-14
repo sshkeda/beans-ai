@@ -22,8 +22,6 @@ The goal: create the world's best chess tutor.
 
 How? Reinforcement learning and fine-tuning LLMs.
 
----
-
 ## beans-0-1.5B
 
 Before becoming a grandmaster, one must first learn to make legal moves.
