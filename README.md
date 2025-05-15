@@ -1,10 +1,10 @@
-Nowadays, chess engines like Stockfish are incredibly powerful.
+Today, chess engines like Stockfish are incredibly powerful.
 
 They can beat every human on earth with little to no effort.
 
 And while they are so strong, there's one thing that sets them apart from the best grandmasters.
 
-They can't talk.
+They can’t explain their thinking process.
 
 But imagine if they could.
 
