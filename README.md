@@ -53,7 +53,7 @@ Answers were scored as follows:
 | **beans-0-1.5B**              | **62**                | **16**            | **22**          | **0.22** | **-0.40**      |
 | DeepSeek-R1-Distill-Qwen-1.5B | 75                    | 21                | 4               | 0.04     | -0.71          |
 
-beans-0-1.5B showed a clear improvement over the baseline DeepSeek-R1-Distill-Qwen-1.5B in generating legal chess moves.
+beans-0-1.5B showed a 5x improvement over the baseline DeepSeek-R1-Distill-Qwen-1.5B in generating legal chess moves.
 
 ## Acknowledgements
 
